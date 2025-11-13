@@ -1,0 +1,191 @@
+/* Importar fuente Roboto */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* ===== Estilos generales ===== */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: linear-gradient(to right, #a1c4fd, #c2e9fb);
+    color: #333;
+}
+
+/* ===== Header ===== (Color púrpura oscuro) */
+header {
+    background-color: #6a0dad;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+    margin: 0;
+    font-weight: 700;
+}
+
+/* ===== Contenedor principal ===== */
+main {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.form-container {
+    background: #ffffff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 500px;
+}
+
+.form-container h2 {
+    text-align: center;
+    color: #4a4a4a;
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+/* ===== Inputs y Labels ===== */
+label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: 400;
+    color: #555;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #6a0dad;
+    box-shadow: 0 0 5px rgba(106, 13, 173, 0.3);
+}
+
+/* ===== Contador de caracteres ===== */
+.char-counter {
+    text-align: right;
+    font-size: 0.85em;
+    color: #777;
+    margin-top: -5px;
+}
+
+/* ===== Mensajes de Error ===== */
+.error {
+    color: #e74c3c;
+    font-size: 0.8em;
+    margin-top: 5px;
+    min-height: 1.2em;
+    line-height: 1.2;
+}
+
+/* ===== Checkbox ===== */
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-right: 8px;
+    transform: scale(1.2);
+}
+
+.checkbox-container .checkbox-label {
+    margin: 0;
+}
+
+/* ===== Grupo de botones ===== */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+button {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Botón Enviar */
+#btnEnviar {
+    background-color: #6a0dad;
+    color: white;
+    margin-right: 10px;
+}
+
+#btnEnviar:hover {
+    background-color: #5a0bac;
+    transform: translateY(-2px);
+}
+
+/* Botón Borrar */
+#btnBorrar {
+    background-color: #9c27b0;
+    color: white;
+    margin-left: 10px;
+}
+
+#btnBorrar:hover {
+    background-color: #8c249e;
+    transform: translateY(-2px);
+}
+
+/* ===== Barra de progreso ===== */
+.progreso {
+    margin-top: 15px;
+    height: 15px;
+    background-color: #3a07f3;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.barra {
+    height: 100%;
+    width: 0%;
+    background-color: #6C63FF;
+    transition: width 0.3s;
+}
+
+/* ===== Footer ===== (Púrpura aún más oscuro) */
+footer {
+    background-color: #4a097a;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 0.9em;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.2);
+    margin-top: auto;
+}

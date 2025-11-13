@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formulario de Registro</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Bienvenido al Registro de Usuario</h1>
+  </header>
+
+  <main>
+    <div class="form-container">
+      <h2>Formulario de Registro</h2>
+      <form id="formulario">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" />
+        <p class="error" id="error-nombre"></p>
+
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" name="apellido" />
+        <p class="error" id="error-apellido"></p>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" />
+        <p class="error" id="error-email"></p>
+
+        <label for="edad">Edad:</label>
+        <input type="number" id="edad" name="edad" />
+        <p class="error" id="error-edad"></p>
+
+        <label for="nacimiento">Fecha de nacimiento:</label>
+        <input type="date" id="nacimiento" name="nacimiento" />
+        <p class="error" id="error-nacimiento"></p>
+
+        <label for="genero">Género:</label>
+        <select id="genero" name="genero">
+          <option value="">Seleccionar:</option>
+          <option value="Masculino">Masculino</option>
+          <option value="Femenino">Femenino</option>
+          <option value="Otro">Otro</option>
+        </select>
+        <p class="error" id="error-genero"></p>
+
+        <label for="pais">País:</label>
+        <input type="text" id="pais" name="pais" />
+        <p class="error" id="error-pais"></p>
+
+        <label for="descripcion">Descripción personal:</label>
+        <textarea id="descripcion" name="descripcion" maxlength="255"></textarea>
+        <div class="char-counter">
+          <span id="contador">0</span>/255 caracteres
+        </div>
+        <p class="error" id="error-descripcion"></p>
+
+        <!-- Barra de progreso -->
+        <div class="progreso-container">
+          <label><strong>Progreso del formulario:</strong></label>
+          <div class="progreso">
+            <div class="barra" id="barra"></div>
+          </div>
+          <p id="porcentaje">0% completado</p>
+        </div>
+
+        <div class="checkbox-container">
+          <input type="checkbox" id="terminos" name="terminos" />
+          <label for="terminos" class="checkbox-label">
+            Acepto los términos y condiciones
+          </label>
+        </div>
+        <p class="error" id="error-terminos"></p>
+
+        <div class="button-group">
+          <button type="submit" id="btnEnviar">Enviar</button>
+          <button type="button" id="btnBorrar">Borrar</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <p>
+      © 2025 Todos los derechos reservados — Diseñado por Ing. Carlos Andrés
+      Figueredo y Mischaell Pulido — Centro de Biotecnología Agropecuaria.
+    </p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
