@@ -167,7 +167,7 @@ button {
 .progreso {
     margin-top: 15px;
     height: 15px;
-    background-color: #3a07f3;
+    background-color: #fbfcfa;
     border-radius: 10px;
     overflow: hidden;
 }
@@ -175,7 +175,7 @@ button {
 .barra {
     height: 100%;
     width: 0%;
-    background-color: #6C63FF;
+    background-color: #f00c3d;
     transition: width 0.3s;
 }
 
