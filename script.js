@@ -1,12 +1,4 @@
-// ===== Elementos =====
 const form = document.getElementById("formulario");
-const descripcionInput = document.getElementById("descripcion");
-const contadorSpan = document.getElementById("contador");
-const barra = document.getElementById("barra");
-const porcentajeTexto = document.getElementById("porcentaje");
-const checkboxTerminos = document.getElementById("terminos");
-
-// Campos que SÍ cuentan para la barra (el checkbox NO está incluido)
 const campos = [
   "nombre",
   "apellido",
@@ -18,128 +10,139 @@ const campos = [
   "descripcion",
 ];
 
-// ===== Contador de caracteres =====
-descripcionInput.addEventListener("input", () => {
-  contadorSpan.textContent = descripcionInput.value.length;
-  actualizarProgreso();
+const barra = document.getElementById("barra");
+const descripcion = document.getElementById("descripcion");
+const contador = document.getElementById("contador");
+
+const btnEnviar = document.getElementById("btnEnviar");
+const btnBorrar = document.getElementById("btnBorrar");
+
+// Actualiza el contador de caracteres
+descripcion.addEventListener("input", () => {
+  contador.textContent = `${descripcion.value.length}/150 caracteres`;
 });
 
-// ===== Función para actualizar progreso =====
-function actualizarProgreso() {
-  let completados = 0;
+// Botón de borrar
+btnBorrar.addEventListener("click", () => {
+  form.reset();
+  resetearFormulario();
+  document.querySelectorAll(".error").forEach((e) => (e.textContent = ""));
+  contador.textContent = "0/150 caracteres";
+});
 
-  campos.forEach((campo) => {
-    const elemento = document.getElementById(campo);
-    if (elemento && elemento.value.trim() !== "") completados++;
-  });
+// Botón de enviar
+btnEnviar.addEventListener("click", validarYDescargar);
 
-  const progreso = Math.round((completados / campos.length) * 100);
-  barra.style.width = `${progreso}%`;
-
-  // Colores de la barra
-  if (progreso === 0) {
-    barra.style.backgroundColor = "#e74c3c"; // Rojo inicial
-  } else if (progreso < 33) {
-    barra.style.backgroundColor = "#e74c3c"; // Rojo
-  } else if (progreso < 66) {
-    barra.style.backgroundColor = "#f1c40f"; // Amarillo
-  } else {
-    barra.style.backgroundColor = "#2e46ccff"; // Verde
-  }
-
-  porcentajeTexto.textContent = `${progreso}% completado`;
-}
-
-// ===== Validación =====
 function validarYDescargar() {
   let valido = true;
   document.querySelectorAll(".error").forEach((e) => (e.textContent = ""));
 
-  const nombre = document.getElementById("nombre").value.trim();
-  const apellido = document.getElementById("apellido").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const edad = parseInt(document.getElementById("edad").value, 10);
-  const nacimiento = document.getElementById("nacimiento").value;
-  const genero = document.getElementById("genero").value;
-  const pais = document.getElementById("pais").value.trim();
-  const descripcion = document.getElementById("descripcion").value.trim();
-  const terminos = checkboxTerminos.checked;
-
-  if (nombre === "") {
+  if (document.getElementById("nombre").value.trim() === "") {
     document.getElementById("error-nombre").textContent = "El nombre es obligatorio.";
     valido = false;
   }
-  if (apellido === "") {
+
+  if (document.getElementById("apellido").value.trim() === "") {
     document.getElementById("error-apellido").textContent = "El apellido es obligatorio.";
     valido = false;
   }
+
+  const email = document.getElementById("email").value.trim();
   if (email === "" || !email.includes("@")) {
     document.getElementById("error-email").textContent = "Ingrese un correo válido.";
     valido = false;
   }
+
+  const edad = parseInt(document.getElementById("edad").value);
   if (isNaN(edad) || edad < 1 || edad > 120) {
     document.getElementById("error-edad").textContent = "Ingrese una edad válida.";
     valido = false;
   }
-  if (nacimiento === "") {
-    document.getElementById("error-nacimiento").textContent = "Seleccione una fecha.";
+
+  if (document.getElementById("nacimiento").value === "") {
+    document.getElementById("error-nacimiento").textContent = "Ingrese su fecha de nacimiento.";
     valido = false;
   }
-  if (genero === "") {
+
+  if (document.getElementById("genero").value === "") {
     document.getElementById("error-genero").textContent = "Seleccione su género.";
     valido = false;
   }
-  if (pais === "") {
+
+  if (document.getElementById("pais").value.trim() === "") {
     document.getElementById("error-pais").textContent = "Ingrese su país.";
     valido = false;
   }
-  if (descripcion.length > 255) {
-    document.getElementById("error-descripcion").textContent = "Máximo 255 caracteres.";
+
+  if (document.getElementById("descripcion").value.trim() === "") {
+    document.getElementById("error-descripcion").textContent = "Ingrese una descripción.";
     valido = false;
   }
-  if (!terminos) {
-    document.getElementById("error-terminos").textContent = "Debe aceptar los términos.";
+
+  if (!document.getElementById("terminos").checked) {
+    document.getElementById("error-terminos").textContent = "Debe aceptar los términos y condiciones.";
     valido = false;
   }
 
   if (valido) {
-    const datos = { nombre, apellido, email, edad, nacimiento, genero, pais, descripcion };
+    const datos = {
+      nombre: document.getElementById("nombre").value,
+      apellido: document.getElementById("apellido").value,
+      email: email,
+      edad: edad,
+      nacimiento: document.getElementById("nacimiento").value,
+      genero: document.getElementById("genero").value,
+      pais: document.getElementById("pais").value,
+      descripcion: document.getElementById("descripcion").value,
+      terminos: document.getElementById("terminos").checked,
+    };
+
     const blob = new Blob([JSON.stringify(datos, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
+    a.href = url;
     a.download = "datos_formulario.json";
     a.click();
+    URL.revokeObjectURL(url);
 
-    alert("✅ Formulario enviado correctamente.");
-    form.reset();
-    contadorSpan.textContent = "0";
-    actualizarProgreso();
+    alert("Formulario válido. Se ha generado el archivo JSON.");
   }
 }
 
-// ===== Eventos =====
+// Actualiza la barra de progreso
+function actualizaProgreso() {
+  let completados = 0;
+  // El total de campos a considerar es la longitud del array 'campos' (8 campos de texto/select)
+  const total = campos.length;
 
-// Actualiza la barra solo con los campos válidos
+  campos.forEach((id) => {
+    const campo = document.getElementById(id);
+    // Verificamos si el campo de texto/select tiene un valor no vacío
+    if (campo.value && campo.value.trim() !== "") {
+      completados++;
+    }
+  });
+
+  // *** SE HA ELIMINADO la línea que incluía el checkbox de términos. ***
+  // if (document.getElementById("terminos").checked) completados++; 
+  
+  // Ahora el cálculo es sobre el total de campos en el array 'campos' (8)
+  const porcentaje = Math.round((completados / total) * 100); 
+  barra.style.width = porcentaje + "%";
+}
+
+// Resetea barra y contador
+function resetearFormulario() {
+  barra.style.width = "0%";
+  contador.textContent = "0/150 caracteres";
+}
+
+// Eventos para actualizar progreso
 campos.forEach((id) => {
   const campo = document.getElementById(id);
-  if (campo) campo.addEventListener("input", actualizarProgreso);
+  campo.addEventListener("input", actualizaProgreso);
+  campo.addEventListener("change", actualizaProgreso);
 });
 
-// 🚫 Evita que el checkbox afecte el progreso
-checkboxTerminos.addEventListener("change", () => {
-  // No actualizamos la barra ni el color aquí
-  porcentajeTexto.textContent = porcentajeTexto.textContent; // mantiene el valor actual
-});
-
-// ===== Botones =====
-document.getElementById("btnEnviar").addEventListener("click", (e) => {
-  e.preventDefault();
-  validarYDescargar();
-});
-
-document.getElementById("btnBorrar").addEventListener("click", () => {
-  form.reset();
-  contadorSpan.textContent = "0";
-  document.querySelectorAll(".error").forEach((e) => (e.textContent = ""));
-  actualizarProgreso();
-});
+// El evento 'change' para 'terminos' ya no llama a actualizaProgreso
+// document.getElementById("terminos").addEventListener("change", actualizaProgreso);

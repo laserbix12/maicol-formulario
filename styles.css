@@ -175,7 +175,7 @@ button {
 .barra {
     height: 100%;
     width: 0%;
-    background-color: #f00c3d;
+    background-color: #6a0dad;
     transition: width 0.3s;
 }
 
